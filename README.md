@@ -1,7 +1,7 @@
 # Suprise Eggs Minecraft Plugin
 
-![Minecraft](https://img.shields.io/badge/Minecraft-1.17+-brightgreen.svg)
-![Spigot](https://img.shields.io/badge/Spigot-1.17.1-orange.svg)
+![Minecraft](https://img.shields.io/badge/Minecraft-1.20+-brightgreen.svg)
+![Spigot](https://img.shields.io/badge/Spigot-1.20.2-orange.svg)
 ![License](https://img.shields.io/badge/License-MIT-blue.svg)
 
 ## Description
