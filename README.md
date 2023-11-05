@@ -19,7 +19,7 @@
 
 To get Surprise Eggs up and running on your Minecraft Spigot server, follow these simple steps:
 
-1. Download the Surprise Eggs plugin JAR file from the [Releases](https://github.com/your-username/surprise-eggs/releases) page.
+1. Download the Surprise Eggs plugin JAR file from the [Releases](https://www.spigotmc.org/resources/surpriseeggs.113394/) page.
 
 2. Place the JAR file in your Spigot server's "plugins" directory.
 
