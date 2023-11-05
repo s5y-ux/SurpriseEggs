@@ -7,14 +7,13 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class Main extends JavaPlugin {
     ConsoleCommandSender console = getServer().getConsoleSender();
 
-
     @Override
     public void onEnable() {
         EnableMessage();
         getServer().getPluginManager().registerEvents(new SuperEgg(), this);
         getServer().getPluginManager().registerEvents(new Wand(), this);
         getServer().getPluginManager().registerEvents(new TeleportingBow(), this);
-        this.getCommand("supriseeggs").setExecutor(new TestCommand());
+        this.getCommand("surpriseeggs").setExecutor(new TestCommand());
     }
 
     @Override
