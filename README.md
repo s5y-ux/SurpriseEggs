@@ -1,5 +1,3 @@
-# Suprise Eggs Minecraft Plugin
-
 ![Orange Cartoon Chicken Illustration Egg Farm Logo](https://github.com/s5y-ux/SurpriseEggs/assets/59636597/8a0d9f19-b578-4913-9292-8bcbe2b63843)
 
 
