@@ -94,6 +94,8 @@ public class TeleportingBow implements Listener {
                 for (int i = -5; i < 5; i++) {
                     arrowWorld.spawnParticle(Particle.PORTAL, arrowLoc.getX() + i, arrowLoc.getY() + i, arrowLoc.getZ() + i, 10);
                 }
+                telebow = false;
+                explodeBow = false;
                 
             //But on the condition it is a bomb bow
             } else if (explodeBow) {
@@ -109,6 +111,11 @@ public class TeleportingBow implements Listener {
 
                 //And create an explosion at the arrow location
                 arrowWorld.createExplosion(arrowLoc, 5);
+                telebow = false;
+                explodeBow = false;
+            } else {
+            	telebow = false;
+                explodeBow = false;
             }
         }
     }
