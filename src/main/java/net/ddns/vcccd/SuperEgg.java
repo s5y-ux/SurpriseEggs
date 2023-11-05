@@ -1,0 +1,227 @@
+package net.ddns.vcccd;
+
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Particle;
+import org.bukkit.TreeType;
+import org.bukkit.World;
+import org.bukkit.entity.Egg;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerEggThrowEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.Random;
+
+public class SuperEgg implements Listener {
+
+    //Boolean used to check if the egg being thrown is a suprise egg
+    Boolean TrueEgg = false;
+
+    //Function RNG returns a Random Number
+    public int RNG() {
+        Random randomnumber = new Random();
+        int return_val = randomnumber.nextInt(11);
+        return (return_val);
+    }
+
+    /*
+    ExplodeInStyle takes a particle, egg, and world
+    check the coords of that egg and spawns particles
+    in the world according to the location of the egg
+    */
+    public void explodeInStyle(Particle parameter, Egg egg, World world) {
+
+        //Stores the location of the egg in egg_loc variable
+        Location egg_loc = egg.getLocation();
+
+        //Inits doubles to reference in the argument of the spawn particle method
+        double X, Y, Z;
+
+        //Assigns the values at their respective coordinates
+        X = egg_loc.getX();
+        Y = egg_loc.getY();
+        Z = egg_loc.getZ();
+
+        //Spawns the particles
+        for (int i = -5; i < 5; i++) {
+            world.spawnParticle(parameter, X + i, Y + i, Z + i, 10);
+        }
+    }
+
+    @EventHandler
+
+    /*
+     * This event is used the moment the egg is about to leave the hand.
+     * Depending on if the egg that was in the hand is a suprise egg,
+     * before the event to handle the suprise eggs executes, we set
+     * the true egg variable to true for any suprise egg functionality.
+     */
+    public void PreEggTrow(PlayerInteractEvent event) {
+
+        //Stores the player in a reference variable
+        Player player = event.getPlayer();
+
+        //Store the item (an egg) in a reference variable
+        ItemStack Egg = player.getInventory().getItemInMainHand();
+
+        //Checks the Item Meta for the name of the Egg
+        if (Egg.getItemMeta().getDisplayName().equals(ChatColor.translateAlternateColorCodes('&', "&e&lSuprise Egg"))) {
+            TrueEgg = true;
+        } else {
+            TrueEgg = false;
+        }
+    }
+
+    @EventHandler
+
+    /*
+     * Now its time to handle when the egg hits the ground.
+     * Here is all of the different things the surprise egg can do...
+     */
+
+    public void onEggThrow(PlayerEggThrowEvent event) {
+
+        if (TrueEgg == true) {
+
+            //Here we set all of the different custom items that the egg can give us
+            ItemStack DiamondDrop = new ItemStack(Material.DIAMOND);
+
+            ItemStack StickOfFire = new ItemStack(Material.STICK);
+            ItemMeta StickOfFire_Meta = StickOfFire.getItemMeta();
+            StickOfFire_Meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&c&lStick Of Fire!"));
+            StickOfFire.setItemMeta(StickOfFire_Meta);
+
+            ItemStack TeleBow = new ItemStack(Material.BOW);
+            ItemMeta TeleBowData = TeleBow.getItemMeta();
+            TeleBowData.setDisplayName(ChatColor.LIGHT_PURPLE + "TeleBow");
+            TeleBow.setItemMeta(TeleBowData);
+
+            ItemStack BomBow = new ItemStack(Material.BOW);
+            ItemMeta BomBowData = BomBow.getItemMeta();
+            BomBowData.setDisplayName(ChatColor.RED + "BomBow");
+            BomBow.setItemMeta(BomBowData);
+
+            //Sets Hatching to False so nothing is Hatched from the base egg
+            event.setHatching(false);
+
+            //Init reference variables for player, world, and egg in the Throw event
+            Player player = event.getPlayer();
+            World event_world = player.getWorld();
+            Egg Thrown_Egg = event.getEgg();
+
+            //Stores the Coords of the thrown egg on collision
+            Location egg = Thrown_Egg.getLocation();
+
+
+            //Random Events Section
+
+            /*
+             * Notice the use of RNG() to generate a random number.
+             * If you want more events, you must change the argument.
+             */
+
+            switch (RNG()) {
+                case 0:
+                    //This is literlly just an explosion...
+                    event_world.createExplosion(egg, 5, false);
+                    explodeInStyle(Particle.CLOUD, Thrown_Egg, event_world);
+                    break;
+                case 1:
+                    //This was early in the development. This just spawns a llama
+                    event_world.spawnEntity(egg, EntityType.LLAMA);
+                    explodeInStyle(Particle.CLOUD, Thrown_Egg, event_world);
+                    break;
+                case 2:
+                    //This one generates a tree in the world. Pretty cool!
+                    event_world.generateTree(egg, TreeType.BIG_TREE);
+                    explodeInStyle(Particle.CLOUD, Thrown_Egg, event_world);
+                    break;
+                case 3:
+                    //This one is a little disruptive, will add in configuration file
+                    //If the Admins want to change this.
+                    //Sets world to a cold and rainy night.
+                    event_world.setClearWeatherDuration(0);
+                    explodeInStyle(Particle.CLOUD, Thrown_Egg, event_world);
+                    player.sendTitle(ChatColor.BLUE + "On a cold night...", null, 3, 40, 3);
+                    event_world.setTime(15000);
+                    break;
+                case 4:
+                    //This one does the oppisate of the previous case
+                    //It converts it to a nice warm morning.
+                    event_world.setClearWeatherDuration(10000);
+                    explodeInStyle(Particle.CLOUD, Thrown_Egg, event_world);
+                    player.sendTitle(ChatColor.YELLOW + "On a warm day...", null, 3, 40, 3);
+                    event_world.setTime(0);
+                    break;
+                case 5:
+                    //This one spawns creepers.
+
+                    //Embedded for loop to generate a box of creepers on the X and Z axis
+                    for (int i = 0; i < 4; i++) {
+                        egg.setX(egg.getX() + (i));
+                        event_world.spawnEntity(egg, EntityType.CREEPER);
+                        for (int j = -2; j < 2; j++) {
+                            egg.setZ(egg.getZ() + (j));
+                            event_world.spawnEntity(egg, EntityType.CREEPER);
+                        }
+                    }
+                    explodeInStyle(Particle.CLOUD, Thrown_Egg, event_world);
+                    player.sendMessage(ChatColor.GREEN + "Good Luck With That :)");
+                    break;
+                case 6:
+                    //This one drops three diamonds.
+                    for (int i = 0; i < 3; i++) {
+                        event_world.dropItem(egg, DiamondDrop);
+                    }
+                    explodeInStyle(Particle.CRIT_MAGIC, Thrown_Egg, event_world);
+                    player.sendMessage(ChatColor.BLUE + "Wow Diamonds!!!");
+                    break;
+                case 7:
+                    //This one summons the Stick of Fire
+                    //Note the Custom Items
+                    event_world.dropItem(egg, StickOfFire);
+                    explodeInStyle(Particle.CAMPFIRE_SIGNAL_SMOKE, Thrown_Egg, event_world);
+                    player.sendMessage(ChatColor.RED + "Behold... The Stick Of FIRE!");
+                    break;
+                case 8:
+                    //This one teleports the player.
+                    player.sendMessage(ChatColor.YELLOW + "Woosh!");
+                    player.teleport(egg);
+                    explodeInStyle(Particle.CLOUD, Thrown_Egg, event_world);
+                    break;
+                    /*
+                     * The Next two cases are for the teleporting bow
+                     * and the Bomb bow, If you wish to change
+                     * the functionality of these two items please
+                     * refer to the Teleporting bow class. I know
+                     * It only says teleporting bow, the bomb bow was added
+                     * on a whim. I would tell you that Id make a seprate
+                     * class for the bomb bow but Id be lying, I know
+                     * that this plugin is a little scrappy but it was
+                     * mostly for me to get familiar with the spigot API
+                     */
+                case 9:
+                    //As said in the above comment, this one drops the teleporting bor
+                    event_world.dropItem(egg, TeleBow);
+                    explodeInStyle(Particle.PORTAL, Thrown_Egg, event_world);
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&f&lBehold! The &d&lTeleBow!"));
+                    break;
+                case 10:
+                    //And this one drops the Exploding bow known as BombBow
+                    event_world.dropItem(egg, BomBow);
+                    explodeInStyle(Particle.LAVA, Thrown_Egg, event_world);
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&f&lBehold! The &c&lBomBow!"));
+                    break;
+            }
+        }
+
+
+
+    }
+}
