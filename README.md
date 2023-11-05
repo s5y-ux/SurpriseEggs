@@ -7,8 +7,6 @@
 
 # Surprise Eggs - A Minecraft Spigot Plugin
 
-![Surprise Eggs Logo](https://example.com/surprise-eggs-logo.png)
-
 **Surprise Eggs** is an exhilarating Minecraft Spigot plugin that introduces an element of surprise and excitement into your gameplay. With custom items and thrilling random events, this plugin promises to keep players on their toes and make their Minecraft experience truly unique.
 
 ## Features
