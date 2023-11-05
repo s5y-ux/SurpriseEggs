@@ -71,7 +71,7 @@ public class SuperEgg implements Listener {
         ItemStack Egg = player.getInventory().getItemInMainHand();
 
         //Checks the Item Meta for the name of the Egg
-        if (Egg.getItemMeta().getDisplayName().equals(ChatColor.translateAlternateColorCodes('&', "&e&lSuprise Egg"))) {
+        if (Egg.getItemMeta().getDisplayName().equals(ChatColor.translateAlternateColorCodes('&', "&e&lSurprise Egg"))) {
             TrueEgg = true;
         } else {
             TrueEgg = false;
