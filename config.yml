@@ -1,0 +1,12 @@
+CanExplode: true
+CanSpawnLlama: true
+CanGenerateTree: true
+CanExplode: true
+CanSetDay: true
+CanSetNight: true
+CanSpawnCreepers: true
+CanDropDiamonds: true
+CanTeleportPlayer: true
+CanDropBomBow: true
+CanDropStickOfFire: true
+CanCanDropTelebow: true
