@@ -4,6 +4,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.TreeType;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -29,6 +30,12 @@ public class SuperEgg implements Listener {
         this.main = main;
     }
 
+    public void PlaySound(Boolean bool, Sound sound, Player player) {
+    	if(bool) {
+    		player.playSound(player.getLocation(), sound, 100, 1);
+    	}
+    }
+    
     //Function RNG returns a Random Number
     public int RNG(int max_value) {
         Random randomnumber = new Random();
@@ -77,12 +84,16 @@ public class SuperEgg implements Listener {
         ItemStack Egg = player.getInventory().getItemInMainHand();
 
         //Checks the Item Meta for the name of the Egg
+        if(Egg.getItemMeta() != null) {
         if (Egg.getItemMeta().getDisplayName().equals(ChatColor.translateAlternateColorCodes('&', "&e&lSurprise Egg"))) {
             TrueEgg = true;
         } else {
             TrueEgg = false;
         }
+    } else {
+    	TrueEgg = false;
     }
+    } 
 
     @EventHandler
 
@@ -174,17 +185,20 @@ public class SuperEgg implements Listener {
                         //if(config.getBoolean("CanExplode")) {
                         event_world.createExplosion(egg, 5, false);
                         explodeInStyle(Particle.CLOUD, Thrown_Egg, event_world);
+                        PlaySound(config.getBoolean("PlaySound"), Sound.ENTITY_VILLAGER_HURT, player);
                         break;
                     case 1:
                         //This was early in the development. This just spawns a llama
                         event_world.spawnEntity(egg, EntityType.LLAMA);
                         explodeInStyle(Particle.CLOUD, Thrown_Egg, event_world);
+                        PlaySound(config.getBoolean("PlaySound"), Sound.ENTITY_VILLAGER_AMBIENT, player);
                         break;
                     case 2:
                         //This one generates a tree in the world. Pretty cool!
 
                         event_world.generateTree(egg, TreeType.TREE);
                         explodeInStyle(Particle.CLOUD, Thrown_Egg, event_world);
+                        PlaySound(config.getBoolean("PlaySound"), Sound.ENTITY_VILLAGER_AMBIENT, player);
                         break;
                     case 3:
                         //This one is a little disruptive, will add in configuration file
@@ -195,6 +209,7 @@ public class SuperEgg implements Listener {
                         explodeInStyle(Particle.CLOUD, Thrown_Egg, event_world);
                         player.sendTitle(ChatColor.BLUE + "On a cold night...", null, 3, 40, 3);
                         event_world.setTime(15000);
+                        PlaySound(config.getBoolean("PlaySound"), Sound.ENTITY_VILLAGER_AMBIENT, player);
                         break;
                     case 4:
                         //This one does the opposite of the previous case
@@ -204,6 +219,7 @@ public class SuperEgg implements Listener {
                         explodeInStyle(Particle.CLOUD, Thrown_Egg, event_world);
                         player.sendTitle(ChatColor.YELLOW + "On a warm day...", null, 3, 40, 3);
                         event_world.setTime(0);
+                        PlaySound(config.getBoolean("PlaySound"), Sound.ENTITY_VILLAGER_AMBIENT, player);
                         break;
                     case 5:
                         //This one spawns creepers.
@@ -220,6 +236,7 @@ public class SuperEgg implements Listener {
                         }
                         explodeInStyle(Particle.CLOUD, Thrown_Egg, event_world);
                         player.sendMessage(ChatColor.GREEN + "Good Luck With That :)");
+                        PlaySound(config.getBoolean("PlaySound"), Sound.ENTITY_VILLAGER_HURT, player);
                         break;
                     case 6:
                         //This one drops three diamonds.
@@ -229,6 +246,7 @@ public class SuperEgg implements Listener {
                         }
                         explodeInStyle(Particle.CRIT_MAGIC, Thrown_Egg, event_world);
                         player.sendMessage(ChatColor.BLUE + "Wow Diamonds!!!");
+                        PlaySound(config.getBoolean("PlaySound"), Sound.ENTITY_VILLAGER_AMBIENT, player);
                         break;
                     case 7:
                         //This one summons the Stick of Fire
@@ -237,6 +255,7 @@ public class SuperEgg implements Listener {
                         event_world.dropItem(egg, StickOfFire);
                         explodeInStyle(Particle.CAMPFIRE_SIGNAL_SMOKE, Thrown_Egg, event_world);
                         player.sendMessage(ChatColor.RED + "Behold... The Stick Of FIRE!");
+                        PlaySound(config.getBoolean("PlaySound"), Sound.ENTITY_VILLAGER_AMBIENT, player);
                         break;
                     case 8:
                         //This one teleports the player.
@@ -244,6 +263,7 @@ public class SuperEgg implements Listener {
                         player.sendMessage(ChatColor.YELLOW + "Woosh!");
                         player.teleport(egg);
                         explodeInStyle(Particle.CLOUD, Thrown_Egg, event_world);
+                        PlaySound(config.getBoolean("PlaySound"), Sound.ENTITY_VILLAGER_AMBIENT, player);
                         break;
                         /*
                          * The Next two cases are for the teleporting bow
@@ -262,12 +282,14 @@ public class SuperEgg implements Listener {
                         event_world.dropItem(egg, TeleBow);
                         explodeInStyle(Particle.PORTAL, Thrown_Egg, event_world);
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&f&lBehold! The &d&lTeleBow!"));
+                        PlaySound(config.getBoolean("PlaySound"), Sound.ENTITY_VILLAGER_AMBIENT, player);
                         break;
                     case 10:
                         //And this one drops the Exploding bow known as BombBow	           
                         event_world.dropItem(egg, BomBow);
                         explodeInStyle(Particle.LAVA, Thrown_Egg, event_world);
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&f&lBehold! The &c&lBomBow!"));
+                        PlaySound(config.getBoolean("PlaySound"), Sound.ENTITY_VILLAGER_AMBIENT, player);
                         break;
                     default:
                         player.sendMessage("Dude... The Config...");

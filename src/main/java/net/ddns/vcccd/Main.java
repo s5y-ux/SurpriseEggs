@@ -24,6 +24,7 @@ public class Main extends JavaPlugin {
         config.addDefault("CanDropBomBow", true);
         config.addDefault("CanDropStickOfFire", true);
         config.addDefault("CanCanDropTelebow", true);
+        config.addDefault("PlaySound", true);
         this.saveDefaultConfig();
         getServer().getPluginManager().registerEvents(new SuperEgg(this), this);
         getServer().getPluginManager().registerEvents(new Wand(), this);
@@ -42,7 +43,7 @@ public class Main extends JavaPlugin {
         console.sendMessage("");
         console.sendMessage(ChatColor.YELLOW + "Suprise Eggs");
         console.sendMessage(ChatColor.GREEN + "Made by s5y");
-        console.sendMessage(ChatColor.GREEN + "Version: " + ChatColor.WHITE + "1.0.4");
+        console.sendMessage(ChatColor.GREEN + "Version: " + ChatColor.WHITE + "1.0.5");
         console.sendMessage("");
         console.sendMessage(ChatColor.GREEN + Decor());
     }
