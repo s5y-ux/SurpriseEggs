@@ -57,7 +57,7 @@ When you throw a Surprise Egg, be prepared for the unexpected. The plugin introd
 
 ## Support
 
-If you encounter any issues, have suggestions for improvements, or need assistance with Surprise Eggs, please reach out to us on [GitHub Issues](https://github.com/s5y-ux/surprise-eggs/issues). We're here to help and make your experience even more exciting.
+If you encounter any issues, have suggestions for improvements, or need assistance with Surprise Eggs, please reach out to us on [GitHub Issues](https://github.com/s5y-ux/SurpriseEggs/issues). We're here to help and make your experience even more exciting.
 
 ## License
 
