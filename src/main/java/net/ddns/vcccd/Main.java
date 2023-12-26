@@ -24,11 +24,16 @@ public class Main extends JavaPlugin {
         config.addDefault("CanDropBomBow", true);
         config.addDefault("CanDropStickOfFire", true);
         config.addDefault("CanCanDropTelebow", true);
+        config.addDefault("CanSpawnTrident", true);
         config.addDefault("PlaySound", true);
+        config.addDefault("CanLaunchPlayer", true);
+        config.addDefault("LaunchPlayerAmount", 5);
+        config.addDefault("TridentSummon", true);
         this.saveDefaultConfig();
         getServer().getPluginManager().registerEvents(new SuperEgg(this), this);
         getServer().getPluginManager().registerEvents(new Wand(), this);
         getServer().getPluginManager().registerEvents(new TeleportingBow(), this);
+        getServer().getPluginManager().registerEvents(new TridentOfRandomnessListener(this), this);
         this.getCommand("surpriseeggs").setExecutor(new TestCommand());
     }
 

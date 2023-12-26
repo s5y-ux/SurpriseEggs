@@ -1,5 +1,5 @@
 CanExplode: true
-CanSpawnLlama: true
+CanSpawnCreature: true
 CanGenerateTree: true
 CanExplode: true
 CanSetDay: true
@@ -10,6 +10,10 @@ CanTeleportPlayer: true
 CanDropBomBow: true
 CanDropStickOfFire: true
 CanCanDropTelebow: true
+CanLaunchPlayer: true
+CanSpawnTrident: true
 
 # --- General Control ---
 PlaySound: true
+LaunchPlayerAmount: 5
+TridentSummon: true

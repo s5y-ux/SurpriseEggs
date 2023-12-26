@@ -9,6 +9,7 @@ import org.bukkit.TreeType;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Egg;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -17,6 +18,9 @@ import org.bukkit.event.player.PlayerEggThrowEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.util.Vector;
+
+
 import java.util.Random;
 import java.util.ArrayList;
 
@@ -48,7 +52,7 @@ public class SuperEgg implements Listener {
     check the coords of that egg and spawns particles
     in the world according to the location of the egg
     */
-    public void explodeInStyle(Particle parameter, Egg egg, World world) {
+    public void explodeInStyle(Particle parameter, Entity egg, World world) {
 
         //Stores the location of the egg in egg_loc variable
         Location egg_loc = egg.getLocation();
@@ -146,10 +150,12 @@ public class SuperEgg implements Listener {
 
             //This array is filled with all of the different cases according to the config file
             ArrayList < Integer > CaseArray = new ArrayList < Integer > ();
+            EntityType[] EntityArray = {EntityType.HORSE, EntityType.BLAZE, EntityType.CAMEL, EntityType.DONKEY,
+            		EntityType.CAT, EntityType.RABBIT, EntityType.SKELETON_HORSE};
 
             boolean[] Config_Keys = {
                 config.getBoolean("CanExplode"),
-                config.getBoolean("CanSpawnLlama"),
+                config.getBoolean("CanSpawnCreature"),
                 config.getBoolean("CanGenerateTree"),
                 config.getBoolean("CanSetDay"),
                 config.getBoolean("CanSetNight"),
@@ -158,7 +164,9 @@ public class SuperEgg implements Listener {
                 config.getBoolean("CanDropStickOfFire"),
                 config.getBoolean("CanTeleportPlayer"),
                 config.getBoolean("CanCanDropTelebow"),
-                config.getBoolean("CanDropBomBow")
+                config.getBoolean("CanDropBomBow"),
+                config.getBoolean("CanLaunchPlayer"),
+                config.getBoolean("CanSpawnTrident")
             };
 
             //We iterate over the config values and if true place the corresponding index in the CaseArray
@@ -188,8 +196,8 @@ public class SuperEgg implements Listener {
                         PlaySound(config.getBoolean("PlaySound"), Sound.ENTITY_VILLAGER_HURT, player);
                         break;
                     case 1:
-                        //This was early in the development. This just spawns a llama
-                        event_world.spawnEntity(egg, EntityType.LLAMA);
+                        //This was early in the development. This just spawns an entity
+                        event_world.spawnEntity(egg, EntityArray[RNG(EntityArray.length)]);
                         explodeInStyle(Particle.CLOUD, Thrown_Egg, event_world);
                         PlaySound(config.getBoolean("PlaySound"), Sound.ENTITY_VILLAGER_AMBIENT, player);
                         break;
@@ -291,6 +299,17 @@ public class SuperEgg implements Listener {
                         player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&f&lBehold! The &c&lBomBow!"));
                         PlaySound(config.getBoolean("PlaySound"), Sound.ENTITY_VILLAGER_AMBIENT, player);
                         break;
+                    case 11:
+                    	PlaySound(config.getBoolean("PlaySound"), Sound.ENTITY_VILLAGER_HURT, player);
+                    	Vector Direction = new Vector(0, config.getInt("LaunchPlayerAmount"), 0);
+                    	explodeInStyle(Particle.CLOUD, player, event_world);
+                    	player.setVelocity(Direction);
+                    	break;
+                    case 12:
+                    	TridentOfRandomness PlayerTrident = new TridentOfRandomness(player);
+                    	PlaySound(config.getBoolean("PlaySound"), Sound.ENTITY_VILLAGER_AMBIENT, player);
+                    	explodeInStyle(Particle.CLOUD, player, event_world);
+                    	break;
                     default:
                         player.sendMessage("Dude... The Config...");
                 }
@@ -302,4 +321,5 @@ public class SuperEgg implements Listener {
 
 
     }
+    
 }
