@@ -69,4 +69,4 @@ We'd like to extend our gratitude to the Minecraft community, Spigot developers,
 
 ---
 
-**Surprise Eggs** - Unleash the element of surprise in your Minecraft adventures! Enjoy the plugin, and may your eggs always bring exciting and unexpected moments to your gameplay..
+**Surprise Eggs** - Unleash the element of surprise in your Minecraft adventures! Enjoy the plugin, and may your eggs always bring exciting and unexpected moments to your gameplay.
